@@ -1,0 +1,57 @@
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+   <title>Angular js $http</title>
+ </head>
+ <body>
+   <body ng-app='myapp'>
+
+ <div ng-controller="userCtrl">
+
+ <table class="table table-striped" >
+
+ <tr>
+   <th>Id</th>
+ <th>First name</th>
+ <th>Last name</th>
+ <th>Username</th>
+ </tr>
+
+ <!-- Display records -->
+ <tr ng-repeat="user in users">
+   <td>{{user.id}}</td>
+ <td>{{user.fname}}</td>
+ <td>{{user.lname}}</td>
+ <td>{{user.username}}</td>
+ </tr>
+
+ </table>
+ </div>
+
+ <script type="text/javascript">
+ var config = angular.module('myapp', []);
+
+config.controller('userCtrl', ['$scope', '$http', function ($scope, $http) {
+ $http({
+  method: 'get',
+  url: 'getdata.php'
+ }).then(function successCallback(response) {
+  // Store response data
+  $scope.users = response.data;
+ });
+}]);
+
+
+ </script>
+
+ </body>
+ </html>
