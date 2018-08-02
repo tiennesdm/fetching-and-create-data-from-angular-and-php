@@ -1,0 +1,92 @@
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>    
+   <title>Angular js $http</title>
+ </head>
+ <body>
+   <body ng-app='myapp'>
+    <div ng-controller="createcontroller">
+      <table class="table table-striped" >
+
+ <tr>
+ <th>First name</th>
+ <th>Last name</th>
+ <th>Username</th>
+ <th>Create</th>
+ </tr>
+
+ <!-- Display records -->
+ <tr>
+   <td><input type="text" ng-model="first_name" /></td>
+ <td><input type="text" ng-model="last_name" /></td>
+ <td><input type="text" ng-model="username" /></td>
+ <td> <input type="button" value="submit" ng-click="insertdata()"/></td>
+ </tr>
+
+ </table>
+ </div>
+
+ <div ng-controller="userCtrl" >
+
+ <table class="table table-striped" >
+
+ <tr>
+   <th>Id</th>
+ <th>First name</th>
+ <th>Last name</th>
+ <th>Username</th>
+ </tr>
+
+ <!-- Display records -->
+ <tr ng-repeat="user in users">
+   <td>{{user.id}}</td>
+ <td>{{user.fname}}</td>
+ <td>{{user.lname}}</td>
+ <td>{{user.username}}</td>
+
+ </tr>
+
+ </table>
+ </div>
+
+
+
+  <script type="text/javascript">
+ var config = angular.module('myapp', []);
+
+config.controller('userCtrl', ['$scope', '$http', function ($scope, $http) {
+ $http({
+  method: 'get',
+  url: 'getdata.php'
+ }).then(function successCallback(response) {
+  // Store response data
+  $scope.users = response.data;
+     console.log("successfully reteriving");
+ });
+}]);
+        config.controller('createcontroller', function($scope, $http){
+            $scope.insertdata=function(){
+                $http.post("insert.php",{'first_name':$scope.first_name,'last_name':$scope.last_name,'username':$scope.username})
+                    .success(function(data,status,headers,config){
+                        console.log(data);
+                    alert(status+"successfully inserted");
+                    });
+            }
+        });
+
+
+ </script>
+
+
+ </body>
+ </html>
